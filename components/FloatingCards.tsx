@@ -111,7 +111,9 @@ export default function FloatingCards() {
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#32c8f4] opacity-70 group-hover:opacity-100 group-hover:h-[3px] transition-all"></div>
 
               <h3 
-                ref={el => titleRefs.current[index] = el}
+                ref={(el: HTMLHeadingElement | null) => {
+                  titleRefs.current[index] = el;
+                }}
                 className={`relative text-xl font-bold mb-2 transition-colors duration-300 ${
                   activeCard === index ? 'text-[#32c8f4]' : 'text-white'
                 }`}

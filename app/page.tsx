@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from 'next/image';
 import Navbar from "@/components/Navbar";
 import NetworkGraphComponent from "@/components/NetworkGraph";
 import { Oomph } from "@/utils/Oomph";
 
+const TITLES = ["Full-stack Engineer", "Tech Enthusiast", "Continuous Learner"];
+
 export default function Home() {
   const [titleIndex, setTitleIndex] = useState(0);
-  const titles = ["Full-stack Engineer", "Tech Enthusiast", "Continuous Learner"];
   const titleRef = useRef<HTMLHeadingElement>(null);
   const oomphRef = useRef<Oomph | null>(null);
 
@@ -21,8 +23,8 @@ export default function Home() {
 
     const intervalId = setInterval(() => {
       if (oomphRef.current && titleRef.current) {
-        const nextIndex = (titleIndex + 1) % titles.length;
-        const nextText = titles[nextIndex];
+        const nextIndex = (titleIndex + 1) % TITLES.length;
+        const nextText = TITLES[nextIndex];
         
         // 清除现有的动画并重置状态
         if (oomphRef.current.isInScrambledState()) {
@@ -48,7 +50,7 @@ export default function Home() {
     }, 4000);  // 保持相同的切换间隔
 
     return () => clearInterval(intervalId);
-  }, [titleIndex, titles]);
+  }, [titleIndex]);
 
   return (
     <main className="relative min-h-screen">
@@ -56,20 +58,21 @@ export default function Home() {
         <section id="home" className="min-h-screen relative">
           <div className="avatar-container">
             <div className="avatar-frame">
-              <img 
+              <Image 
                 src="/avatar.jpeg" 
-                alt="Cat_yyy's avatar" 
+                alt="Cat_yyy's avatar"
+                width={200}
+                height={200}
                 style={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
-                  aspectRatio: '1/1'
                 }}
               />
             </div>
             <div className="intro-text">
               <h2 className="text-4xl font-bold">Cat_yyy</h2>
-              <h3 ref={titleRef}>{titles[titleIndex]}</h3>
+              <h3 ref={titleRef}>{TITLES[titleIndex]}</h3>
               <p className="text-xs font-bold" style={{ whiteSpace: 'nowrap' }}>
                 Welcome to My personal website.
                 <span className="wave" style={{ display: 'inline-block', marginLeft: '8px' }}>
