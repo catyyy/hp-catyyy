@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Navbar from "@/components/Navbar";
 import NetworkGraphComponent from "@/components/NetworkGraph";
 import { Oomph } from "@/utils/Oomph";
+import nextConfig from "@/next.config";
+const BASE_PATH = nextConfig.basePath || "";
 
 const TITLES = ["Full-stack Engineer", "Tech Enthusiast", "Continuous Learner"];
 
@@ -59,7 +61,7 @@ export default function Home() {
           <div className="avatar-container">
             <div className="avatar-frame">
               <Image 
-                src="/avatar.jpeg" 
+                src={`${BASE_PATH}/avatar.jpeg`}
                 alt="Cat_yyy's avatar"
                 width={200}
                 height={200}
