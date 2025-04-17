@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 class NetworkGraph {
     private canvas: HTMLCanvasElement;
@@ -8,13 +8,15 @@ class NetworkGraph {
     private particles: Particle[];
     private animationFrameId: number;
     private centerPosition: { x: number; y: number };
+    private onParticlesUpdate?: (points: {x: number, y: number}[]) => void;
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(canvas: HTMLCanvasElement, onParticlesUpdate?: (points: {x: number, y: number}[]) => void) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d')!;
         this.particles = [];
         this.animationFrameId = 0;
         this.centerPosition = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        this.onParticlesUpdate = onParticlesUpdate;
 
         this.init();
         window.addEventListener('resize', this.resizeCanvas.bind(this));
@@ -152,6 +154,10 @@ class NetworkGraph {
     private animate(): void {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawConnections();
+        // 每帧将所有粒子坐标传递给回调
+        if (this.onParticlesUpdate) {
+            this.onParticlesUpdate(this.particles.map(p => ({x: p.x, y: p.y})));
+        }
         this.animationFrameId = requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -170,13 +176,17 @@ class Particle {
     ) {}
 }
 
-export default function AboutNetworkGraphComponent() {
+interface AboutNetworkGraphComponentProps {
+  setPoints?: (points: {x: number, y: number}[]) => void;
+}
+
+export default function AboutNetworkGraphComponent({ setPoints }: AboutNetworkGraphComponentProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const graphRef = useRef<NetworkGraph | null>(null);
 
     useEffect(() => {
         if (canvasRef.current) {
-            graphRef.current = new NetworkGraph(canvasRef.current);
+            graphRef.current = new NetworkGraph(canvasRef.current, setPoints);
         }
 
         return () => {
