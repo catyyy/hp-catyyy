@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Oomph } from '@/utils/Oomph';
 import Image from 'next/image';
+import nextConfig from '@/next.config';
+const BASE_PATH = nextConfig.basePath || "";
 
 interface CardInfo {
   title: string;
@@ -333,19 +335,19 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
                         {/* Github 图标 */}
                         <a href="https://github.com/catyyy" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="block">
                           <div style={{width:44, height:44, background:'#fff', borderRadius:0, borderBottom:'4px solid #ffe600', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.12)'}}>
-                            <Image src="/github-mark.svg" alt="GitHub" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
+                            <Image src={`${BASE_PATH}/github-mark.svg`} alt="GitHub" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
                           </div>
                         </a>
                         {/* X 图标 */}
                         <a href="https://x.com/cat_yyy" target="_blank" rel="noopener noreferrer" aria-label="X" className="block">
                           <div style={{width:44, height:44, background:'#fff', borderRadius:0, borderBottom:'4px solid #ffe600', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.12)'}}>
-                            <Image src="/X-mark.svg" alt="X" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
+                            <Image src={`${BASE_PATH}/X-mark.svg`} alt="X" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
                           </div>
                         </a>
                         {/* 邮件图标 */}
                         <a href="mailto:zongyejian@hotmail.com" aria-label="Email" className="block">
                           <div style={{width:44, height:44, background:'#fff', borderRadius:0, borderBottom:'4px solid #ffe600', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.12)'}}>
-                            <Image src="/email-mark.svg" alt="Email" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
+                            <Image src={`${BASE_PATH}/email-mark.svg`} alt="Email" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
                           </div>
                         </a>
                       </div>
