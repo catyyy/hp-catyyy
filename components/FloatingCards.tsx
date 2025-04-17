@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Oomph } from '@/utils/Oomph';
 import Image from 'next/image';
 
@@ -119,6 +119,7 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
       setTypedIndexes([]);
       if (typingInterval.current) clearInterval(typingInterval.current);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCard]);
 
   useEffect(() => {
@@ -136,6 +137,7 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
       setSkillShowCount(0);
       if (skillInterval.current) clearInterval(skillInterval.current);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCard]);
 
   useEffect(() => {
@@ -153,6 +155,7 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
       setProfileTyped('');
       if (profileInterval.current) clearInterval(profileInterval.current);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCard]);
 
   // 轻微漂浮动画
@@ -349,7 +352,7 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
                     )}
                     {index === 2 && activeCard === 2 && (
                       <div className="fade-in grid grid-cols-4 gap-4">
-                        {skillIcons.slice(0, skillShowCount).map((icon, i) => (
+                        {skillIcons.slice(0, skillShowCount).map((icon) => (
                           <div key={icon.alt} style={{width:44, height:44, background:'#fff', borderRadius:0, borderBottom:'4px solid #ffe600', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.12)'}}>
                             <Image src={icon.src} alt={icon.alt} width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
                           </div>

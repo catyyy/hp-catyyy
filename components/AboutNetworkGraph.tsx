@@ -194,7 +194,7 @@ export default function AboutNetworkGraphComponent({ setPoints }: AboutNetworkGr
                 graphRef.current.destroy();
             }
         };
-    }, []);
+    }, [setPoints]);
 
     return (
         <canvas
