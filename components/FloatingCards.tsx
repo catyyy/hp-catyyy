@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { Oomph } from '@/utils/Oomph';
+import Image from 'next/image';
 
 interface CardInfo {
   title: string;
@@ -73,52 +74,13 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
 
   // 漂浮动画状态
   const [floatOffsets, setFloatOffsets] = useState<{x: number, y: number}[]>(() => cards.map(() => ({x: 0, y: 0})));
-  const floatFrame = useRef<number | null>(null);
 
   // 卡片内容ref
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  // 每个卡片的实际宽高
-  const [cardSizes, setCardSizes] = useState<{width: number, height: number}[]>(() => cards.map(() => ({width: 200, height: 100})));
 
   // 跟踪窗口尺寸，避免初始渲染偏移
-  const getInitWindowSize = () => {
-    if (typeof window !== 'undefined') {
-      return { width: window.innerWidth, height: window.innerHeight };
-    }
-    return { width: 1200, height: 800 };
-  };
-  const [windowSize, setWindowSize] = useState(getInitWindowSize);
+  const [windowSize, setWindowSize] = useState({ width: 1200, height: 800 });
   const [ready, setReady] = useState(false);
-
-  // 展开时动态测量卡片内容尺寸（内容未加载完时锁定为最终值）
-  useLayoutEffect(() => {
-    const sizes = cards.map((_, i) => {
-      // Profile内容未加载完时，锁定为较大预估高度
-      if (i === 3 && activeCard === 3 && profileTyped.length < profileText.length) {
-        return { width: 400, height: 320 };
-      }
-      // Profile内容未加载时（即activeCard不是3），也用预估高度
-      if (i === 3 && profileTyped.length === 0) {
-        return { width: 400, height: 320 };
-      }
-      // Skills内容未加载完时，锁定为较大预估高度
-      if (i === 2 && activeCard === 2 && skillShowCount < skillIcons.length) {
-        return { width: 320, height: 180 };
-      }
-      // Skills内容未加载时
-      if (i === 2 && skillShowCount === 0) {
-        return { width: 320, height: 180 };
-      }
-      // 其它情况正常测量
-      const el = cardRefs.current[i];
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        return { width: rect.width, height: rect.height };
-      }
-      return { width: 200, height: 100 };
-    });
-    setCardSizes(sizes);
-  }, [activeCard, profileTyped, skillShowCount, typedIndexes]);
 
   useEffect(() => {
     cards.forEach((_, index) => {
@@ -292,14 +254,12 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
       {ready && cards.map((card, index) => {
         // 计算卡片宽高
         const isActive = activeCard === index;
-        const cardWidth = isActive ? 260 : 130;
-        const cardHeight = isActive ? (index === 3 ? window.innerHeight * 0.5 : 220) : 80;
         // 以左上角为基准定位
         const left = windowSize.width * parseFloat(card.position.left) / 100;
         const top = windowSize.height * parseFloat(card.position.top) / 100;
         // 加上漂浮偏移
-        let leftPos = left + (floatOffsets[index]?.x || 0);
-        let topPos = top + (floatOffsets[index]?.y || 0);
+        const leftPos = left + (floatOffsets[index]?.x || 0);
+        const topPos = top + (floatOffsets[index]?.y || 0);
         return (
           <div
             key={index}
@@ -370,19 +330,19 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
                         {/* Github 图标 */}
                         <a href="https://github.com/catyyy" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="block">
                           <div style={{width:44, height:44, background:'#fff', borderRadius:0, borderBottom:'4px solid #ffe600', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.12)'}}>
-                            <img src="/github-mark.svg" alt="GitHub" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
+                            <Image src="/github-mark.svg" alt="GitHub" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
                           </div>
                         </a>
                         {/* X 图标 */}
                         <a href="https://x.com/cat_yyy" target="_blank" rel="noopener noreferrer" aria-label="X" className="block">
                           <div style={{width:44, height:44, background:'#fff', borderRadius:0, borderBottom:'4px solid #ffe600', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.12)'}}>
-                            <img src="/X-mark.svg" alt="X" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
+                            <Image src="/X-mark.svg" alt="X" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
                           </div>
                         </a>
                         {/* 邮件图标 */}
                         <a href="mailto:zongyejian@hotmail.com" aria-label="Email" className="block">
                           <div style={{width:44, height:44, background:'#fff', borderRadius:0, borderBottom:'4px solid #ffe600', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.12)'}}>
-                            <img src="/email-mark.svg" alt="Email" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
+                            <Image src="/email-mark.svg" alt="Email" width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
                           </div>
                         </a>
                       </div>
@@ -391,7 +351,7 @@ export default function FloatingCards({ points = [] }: FloatingCardsProps) {
                       <div className="fade-in grid grid-cols-4 gap-4">
                         {skillIcons.slice(0, skillShowCount).map((icon, i) => (
                           <div key={icon.alt} style={{width:44, height:44, background:'#fff', borderRadius:0, borderBottom:'4px solid #ffe600', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.12)'}}>
-                            <img src={icon.src} alt={icon.alt} width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
+                            <Image src={icon.src} alt={icon.alt} width={36} height={36} style={{width:36, height:36, objectFit:'contain', display:'block'}} />
                           </div>
                         ))}
                       </div>
