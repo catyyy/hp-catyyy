@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import NetworkGraphComponent from "@/components/NetworkGraph";
 import { useRouter } from "next/navigation";
 import nextConfig from "@/next.config";
+import Image from "next/image";
 
 interface ProjectCard {
   id: number;
@@ -40,7 +41,7 @@ export default function Projects() {
             <div className="relative w-full h-[600px]">
               <div className="absolute inset-0 z-10">
                 <div className="flex flex-wrap gap-14 justify-center items-center h-full">
-                  {projects.map((project, idx) => (
+                  {projects.map((project) => (
                     <div
                       key={project.id}
                       className="group relative bg-black/95 w-80 h-60 cursor-pointer transition-all duration-300 overflow-hidden select-none hover:scale-105 border-b-2 border-[#32c8f4]"
@@ -50,15 +51,11 @@ export default function Projects() {
                       {/* 底部蓝色横条 */}
                       <div className="absolute left-0 right-0 bottom-0 h-[2px] bg-[#32c8f4] opacity-70 group-hover:opacity-100 group-hover:h-[3px] transition-all" style={{ borderRadius: 0 }} />
                       <div style={{position: 'relative', width: '100%', height: '148.3px', margin: 0, padding: 0}}>
-                        <img
+                        <Image
                           src={`${BASE_PATH}${project.image}`}
                           alt={project.title}
+                          fill
                           style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
                             objectFit: 'cover',
                             borderRadius: 0,
                             margin: 0,

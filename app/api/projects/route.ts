@@ -9,7 +9,7 @@ export async function GET() {
     const data = await fs.readFile(filePath, 'utf-8');
     const projects = JSON.parse(data);
     return NextResponse.json({ success: true, projects });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: '无法读取项目数据' }, { status: 500 });
   }
 } 
