@@ -226,7 +226,7 @@ body {
 
 /* 导航栏样式 */
 #header {
-  height: 60px;
+  height: 80px;
   left: 0;
   position: fixed;
   top: 0;
@@ -235,20 +235,20 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 40px;
   transition: all 0.3s ease;
 }
 
 #header.on-light {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.18);
 }
 
 #header.on-dark {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.18);
 }
 
 #header.on-dark .logo,
@@ -263,8 +263,10 @@ body {
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 28px;
+  font-family: 'Montserrat', 'Raleway', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 2.5px;
   transition: color 0.3s ease;
 }
 
@@ -275,13 +277,13 @@ body {
 #header nav ul {
   display: flex;
   align-items: center;
-  gap: 45px;
+  gap: 60px;
 }
 
 #header nav li {
   position: relative;
-  height: 60px;
-  padding-left: 15px;
+  height: 80px;
+  padding-left: 20px;
 }
 
 @media all and (max-width: 640px) {
@@ -296,12 +298,12 @@ body {
 
 #header nav li span {
   background: transparent;
-  border: 3px solid #32c8f4;
-  height: 8px;
-  width: 8px;
+  border: 5px solid #32c8f4;
+  height: 12px;
+  width: 12px;
   left: 0;
   top: 50%;
-  margin-top: -4px;
+  margin-top: -6px;
   position: absolute;
   transform: scale(0);
   transition: transform 200ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -314,11 +316,12 @@ body {
 
 #header nav a {
   display: block;
-  font-size: 13px;
-  line-height: 63px;
+  font-size: 16px;
+  line-height: 80px;
   text-decoration: none;
   text-transform: uppercase;
   opacity: 0.7;
+  font-weight: 500;
   transition: all 200ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
