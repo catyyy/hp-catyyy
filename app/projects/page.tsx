@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import FloatingCards from "@/components/FloatingCards";
 import Navbar from "@/components/Navbar";
 import NetworkGraphComponent from "@/components/NetworkGraph";
 import { useRouter } from "next/navigation";
