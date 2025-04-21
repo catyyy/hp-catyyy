@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
+export const dynamic = "force-static";
+
 export async function GET() {
   // 假设json文件放在项目根目录下，名为projects.json
   const filePath = path.join(process.cwd(), 'projects.json');
